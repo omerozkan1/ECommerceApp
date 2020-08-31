@@ -1,0 +1,61 @@
+﻿@model ProductListDto
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Ürün Listesi</h1>
+<hr />
+
+@if (Model.Products.Count() > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td style="width:30px;">Id</td>
+                <td>Ad</td>
+                <td style="width:12px;">Fiyat</td>
+                <td style="width:150px;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <form asp-action="AddToCart" method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-outline-primary btn-sm ml-3" onclick="islemBasarili()">Sepete Ekle</button>
+                           
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>Ürün bulunamadı.</h4>
+    </div>
+}
+
+
+@section JavaScript{
+
+    <script>
+        function islemBasarili() {
+            alert("işleminiz başarı ile tamamlandı");
+        }
+    </script>
+
+
+}
+

@@ -1,0 +1,59 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "CreateProduct";
+}
+
+<h1>Ürün Ekle</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+        }
+
+
+    <form asp-controller="Admin" asp-action="CreateProduct" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group row">
+            <label asp-for="Name" class="col-md-2 col-form-label">Ad</label>
+            <div class="col-md-10">
+                <input asp-for="Name" value="@Model.Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>    
+        <div class="form-group row">
+            <label asp-for="StockQuantity" class="col-md-2 col-form-label">Stok Adedi</label>
+            <div class="col-md-10">
+                <input asp-for="StockQuantity" value="@Model.StockQuantity" class="form-control" />                <span asp-validation-for="StockQuantity" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Price" class="col-md-2 col-form-label">Fiyat</label>
+            <div class="col-md-10">
+                <input asp-for="Price" value="@Model.Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-10 offset-md-2">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+
+    </form>
+
+    </div>
+</div>
+
+
+@section JavaScript {
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}

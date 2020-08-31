@@ -1,0 +1,24 @@
+﻿@model AppUserLoginDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+    <form asp-action="SignIn" method="post" class="mt-5 w-50 mx-auto p-4 shadow">
+        <div class="form-group">
+            <label asp-for="UserName">Kullanıcı Adı :</label>
+            <span asp-validation-for="UserName" class="text-danger"></span>
+            <input asp-for="UserName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password">Parola :</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <input type="password" asp-for="Password" class="form-control" />
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+
+        <input type="submit" class="btn btn-info btn-sm" value="Giriş Yap" />
+
+    </form>

@@ -1,0 +1,49 @@
+﻿@model CategoryListDto
+@{
+    ViewData["Title"] = "CategoryList";
+}
+
+<h1>Kategoriler</h1>
+<hr />
+
+@if (Model.Categories.Count() > 0)
+{
+    <a asp-action="CreateCategory" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-plus-square mr-2"></i>Kategori Ekle</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td style="width:30px;">Id</td>
+                <td style="width:100px;">Ad</td>
+                <td style="width:150px;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Categories)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm mr-2" href="/admin/editcategory/@item.Id">Düzenle</a>
+                        <form action="/admin/deletecategory" method="post" style="display:inline;">
+                            <input type="hidden" name="categoryId" value="@item.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>Kategori bulunamadı.</h4>
+    </div>
+}
+
+
+
+

@@ -1,0 +1,112 @@
+﻿@model ProductListDto
+@{
+    ViewData["Title"] = "ProductList";
+}
+
+
+<h1>Ürün Listesi</h1>
+<hr />
+
+@if (Model.Products.Count() > 0)
+{
+    <a asp-action="CreateProduct" class="btn btn-outline-dark btn-sm my-2"><i class="fas fa-plus-square mr-2"></i>Ürün Ekle</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td style="width:30px;">Id</td>
+                <td>Ad</td>
+                <td style="width:12px;">Fiyat</td>
+                <td style="width:150px;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" style="display:inline;">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-dark btn-sm" onclick="islemBasarili()">Sepete Ekle</button>
+                        </form>
+                        <a asp-action="EditProduct" asp-route-id="@item.Id" class="btn btn-primary btn-sm"><i class="far fa-edit mr-2"></i>Düzenle</a>
+
+                        <a href="" data-toggle="modal" data-target="#silmeEkrani" data-omer="@item.Id" class="btn btn-danger btn-sm"><i class="fas fa-times-circle mr-2"></i>DeleteProduct</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h4>Ürün bulunamadı.</h4>
+    </div>
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="silmeEkrani" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">UYARI </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Silmek istediğinize emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <button id="btnSil" type="button" class="btn btn-primary">Evet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section JavaScript{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#silmeEkrani").on("show.bs.modal", function (event) {
+                let tetikleyenElement = $(event.relatedTarget);
+                let id = tetikleyenElement.data("omer");
+
+                $("#btnSil").click(function () {
+                    $.ajax({
+                        type: "Get",
+                        url: "./DeleteProduct",
+                        data: { id: id },
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8;",
+                        success: function () {
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            alert(error.statusText);
+                        }
+                    })
+                });
+            })
+        });
+    </script>
+
+    <script>
+        function islemBasarili() {
+            alert("işleminiz başarı ile tamamlandı");
+        }
+    </script>
+
+}
+

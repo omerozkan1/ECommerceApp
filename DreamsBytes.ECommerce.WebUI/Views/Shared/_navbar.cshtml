@@ -1,0 +1,25 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">Dreams&Bytes</a>
+        <ul class="navbar-nav mr-auto">
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a asp-controller="Admin" asp-action="ProductList" class="nav-link active">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Shop" asp-action="List" class="nav-link">Ürünler</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Cart" asp-action="Index" class="nav-link">Sepet</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a asp-controller="Admin" asp-action="CategoryList" class="nav-link">Kategoriler</a>
+                </li>
+            }
+        </ul>
+      
+    </div>
+</nav>
